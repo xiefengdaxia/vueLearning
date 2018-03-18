@@ -1,0 +1,16 @@
+  table, th, td
+  {
+    border: 1px solid blue;
+  }
+  table
+  {
+    float: left;
+  }
+  .active{
+    width: 100px;
+    height: 100px;
+    background:green;
+  }
+  .danger{
+    background: red;
+  }

@@ -1,0 +1,154 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue JS 2 Tutorial</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <table>
+            <thead>
+                <tr>
+                    <td>method方法</td>
+                    <td>
+                        <h1>{{greet('moring')}}</h1>
+                    </td>
+                </tr>
+                <tr>
+                    <td>数据绑定文本{{}}</td>
+                    <td>
+                        <p>Name:{{name}}</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-bind数据绑定属性1</td>
+                    <td>
+                        <a v-bind:href="webSite">webSite</a>
+                        <!-- <a :href="webSite">简写:href webSite</a> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-bind数据绑定2缩写为:</td>
+                    <td>
+                        <input type="text" :value="job">
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-html标签</td>
+                    <td>
+                        <p v-html="webSiteTag"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-if指令 ：是否插入元素</td>
+                    <td>
+                        <p v-if=false>你看不到我</p>
+                        <p v-if=1>现在你看到我了</p>
+                        <p v-if="seen">加冒号会默认读取data的值</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-model双向绑定</td>
+                    <td>
+                        <p>msg:{{msg}}</p>
+                        <br/>
+                        <input type="text" v-model="msg"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-on事件绑定</td>
+                    <td>
+                        {{msg}}&nbsp;&nbsp;<button v-on:click="btnClick()">点我反转</button>     &nbsp;&nbsp;<button @click='btnClick'>v-on还能简写@click</button>                 
+                    </td>
+                </tr>
+                <tr>
+                    <td>filters|过滤器首字母大写</td>
+                    <td>{{msg|filterA}}</td>
+                </tr>
+                <tr>
+                    <td>filters|过滤器传参</td>
+                    <td>{{'2010-11-01'|filterB('-')}}</td>
+                </tr>
+                <tr>
+                    <td>v-if v-else v-else-if</td>
+                    <td v-if="ok==true">v-if如果ok=true插入元素</td>
+                    <td v-else>false 否则显示这个v-else</td>
+                    <td v-else-if="ok==undefined">undefined  v-else-if</td>
+                </tr>
+                <tr>
+                    <td>v-show</td>
+                    <td v-show="ok">ok为真时显示</td>
+                </tr>
+                <tr>
+                    <td>v-for循环迭代</td>
+                    <td>
+                        <ul>
+                            <li v-for="item in fruit">{{item.name}}</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-for循环迭代对象属性</td>
+                    <td>
+                        <ol>
+                            <li v-for="(value,key,index) in object">{{index}} {{key}} {{value}}</li>
+                        </ol>
+                    </td>
+                </tr>
+                <tr>
+                    <td>v-for迭代证书</td>
+                    <td>
+                        <ol>
+                            <li v-for="i in 3">{{i}}</li>
+                        </ol>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+        <table>
+            <tr>
+                <td>computed 计算属性</td>
+                <td>
+                    {{reversedMsg}}
+                </td>
+            </tr>
+            <tr>
+                <td>computed 计算属性的get和set</td>
+                <td>
+                    {{date}}
+                </td>
+            </tr>
+            <tr>
+                <td>watch 监控属性</td>
+                <td>
+                    <ul>
+                        <li>长:<input type="text" v-model="rectangle.width"></input></li>
+                        <li>高:<input type="text" v-model="rectangle.height"></input></li>
+                        <li>面积:<input type="text" v-model="rectangle.area"></input></li></li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>v-bind:class 样式绑定</td>
+                <td>
+                    <div :class="{active:undefined}"></div>
+                    <div :class="{active:true}"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>v-bind:class 样式批量绑定</td>
+                <td>
+                    <div :class="classObj"></div>
+                    <div v-bind:class="[active, danger]"></div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
