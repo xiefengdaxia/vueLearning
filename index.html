@@ -5,6 +5,7 @@
     <title>Vue JS 2 Tutorial</title>
     <link href="style.css" rel="stylesheet">
     <script src="vue.js"></script>
+    <script src="vue-router.js"></script>
 </head>
 
 <body>
@@ -55,13 +56,15 @@
                     <td>
                         <p>msg:{{msg}}</p>
                         <br/>
-                        <input type="text" v-model="msg"/>
+                        <input type="text" v-model="msg" />
                     </td>
                 </tr>
                 <tr>
                     <td>v-on事件绑定</td>
                     <td>
-                        {{msg}}&nbsp;&nbsp;<button v-on:click="btnClick()">点我反转</button>     &nbsp;&nbsp;<button @click='btnClick'>v-on还能简写@click</button>                 
+                        {{msg}}&nbsp;&nbsp;
+                        <button v-on:click="btnClick()">点我反转</button> &nbsp;&nbsp;
+                        <button @click='btnClick'>v-on还能简写@click</button>
                     </td>
                 </tr>
                 <tr>
@@ -76,7 +79,7 @@
                     <td>v-if v-else v-else-if</td>
                     <td v-if="ok==true">v-if如果ok=true插入元素</td>
                     <td v-else>false 否则显示这个v-else</td>
-                    <td v-else-if="ok==undefined">undefined  v-else-if</td>
+                    <td v-else-if="ok==undefined">undefined v-else-if</td>
                 </tr>
                 <tr>
                     <td>v-show</td>
@@ -125,9 +128,16 @@
                 <td>watch 监控属性</td>
                 <td>
                     <ul>
-                        <li>长:<input type="text" v-model="rectangle.width"></input></li>
-                        <li>高:<input type="text" v-model="rectangle.height"></input></li>
-                        <li>面积:<input type="text" v-model="rectangle.area"></input></li></li>
+                        <li>长:
+                            <input type="text" v-model.number.lazy="rectangle.width"></input>
+                        </li>
+                        <li>高:
+                            <input type="text" v-model.trim="rectangle.height"></input>
+                        </li>
+                        <li>面积:
+                            <input type="text" v-model="rectangle.area"></input>
+                        </li>
+                        </li>
                     </ul>
                 </td>
             </tr>
@@ -142,13 +152,142 @@
                 <td>v-bind:class 样式批量绑定</td>
                 <td>
                     <div :class="classObj"></div>
-                    <div v-bind:class="[active, danger]"></div>
+                    <div v-bind:class="['danger','active']"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>v-on 事件处理器</td>
+                <td>
+                    <button @click="showText">v-on触发弹框</button>
+                </td>
+
+                <!-- 阻止单击事件冒泡
+                <a v-on:click.stop="doThis"></a>
+                <!-- 提交事件不再重载页面 -->
+                <!-- <form v-on:submit.prevent="onSubmit"></form> -->
+                <!-- 修饰符可以串联  -->
+                <!-- <a v-on:click.stop.prevent="doThat"></a> -->
+                <!-- 只有修饰符 -->
+                <!-- <form v-on:submit.prevent></form> -->
+                <!-- 添加事件侦听器时使用事件捕获模式 -->
+                <!-- <div v-on:click.capture="doThis">...</div> -->
+                <!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+                <!-- <div v-on:click.self="doThat">...</div> -->
+
+                <!-- click 事件只能点击一次，2.1.4版本新增 -->
+                <!-- <a v-on:click.once="doThis"></a> -->
+                <!--按键修饰符-->
+                <!-- 只有在 keyCode 是 13 时调用 vm.submit() -->
+                <!-- <input v-on:keyup.13="submit"> -->
+            </tr>
+            <tr>
+                <td>复选框</td>
+                <td>
+                    <ul>
+                        <li>
+                            <p>单个复选框</p>
+                            <input type="checkbox" id="checkbox" v-model="checked">
+                            <label for="checkbox">{{checked}}</label>
+                        </li>
+                        <li>
+                            <p>多个复选框</p>
+                            <input type="checkbox" id="checkedAll" v-model="checkedAll" v-on:change="checkAll()">
+                            <label for="checkedAll">全选：{{checkedAll==true?'是':'否'}}</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="Baidu" value="Baidu" v-model="checkedNames"></input>
+                            <label for="Baidu">百度</label>
+                            <input type="checkbox" id="Google" value="Google" v-model="checkedNames"></input>
+                            <label for="Google">谷歌</label>
+                            <input type="checkbox" id="Tencent" value="Tencent" v-model="checkedNames"></input>
+                            <label for="Tencent">腾讯</label>
+                        </li>
+                        <li>
+                            <span>选择的值为：{{checkedNames}}</span>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>单选框</td>
+                <td>
+                    <input type="radio" id="baidu" value="baidu" v-model="picked"></input>
+                    <label for="baidu">百度</label>
+                    <input type="radio" id="google" value="google" v-model="picked">
+                    <label for="google">谷歌</label>
+                    <p>选择的值:{{picked}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>下拉框</td>
+                <td>
+                    <select v-model="selected">
+                        <option v-for="item in fruit">{{item.name}}</option>
+                    </select>
+                    <p>选择的水果：{{selected}}</p>
                 </td>
             </tr>
         </table>
-
+        <table>
+            <tr>
+                <td>Vue.component 全局组件</td>
+                <td>
+                    <top></top>
+                </td>
+            </tr>
+            <tr>
+                <td>components局部组件</td>
+                <td>
+                    <foot></foot>
+                </td>
+            </tr>
+            <tr>
+                <td>props 给组件传值</td>
+                <td>
+                    <top msg='。'></top>
+                </td>
+            </tr>
+            <tr>
+                <td>动态Prop</td>
+                <td>
+                    <top v-bind:msg="msg"></top>
+                </td>
+            </tr>
+            <tr>
+                <td>Props实例</td>
+                <td>
+                    <ol>
+                        <todo-item v-for="item in fruit" v-bind:todo="item"></todo-item>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td>自定义事件的组件</td>
+                <td>
+                    <ul>
+                        <li><button-counter v-on:add="addTotal"></button-counter></li>
+                        <li><button-counter v-on:add="addTotal"></button-counter></li>
+                    </ul>
+                    <p>total:{{total}}</p>
+                </td>
+            </tr>
+            <tr>
+                <td>router路由实例</td>
+                <td>
+                    <ul>
+                        <li>
+                            <router-link to="/a">去A页面</router-link>
+                            <router-link to="/b">去B页面</router-link>
+                        </li>
+                        <li>
+                            <router-view></router-view>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        
     </div>
     <script src="app.js"></script>
 </body>
-
 </html>
